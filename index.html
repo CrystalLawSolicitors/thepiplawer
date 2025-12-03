@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TPL – The PIP Lawyers | PIP Guidance & Advocacy</title>
+
+  <!-- Pico CSS for clean, modern styling -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+  />
+
+  <style>
+    :root {
+      --brand-primary: #153b6b;   /* Deep blue */
+      --brand-accent: #00a3a3;    /* Teal accent */
+      --brand-soft: #f3f6fb;      /* Soft background */
+    }
+
+    body {
+      background: var(--brand-soft);
+    }
+
+    nav.container-fluid {
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      backdrop-filter: blur(8px);
+    }
+
+    nav strong {
+      color: var(--brand-primary);
+      letter-spacing: 0.03em;
+    }
+
+    nav a[role="button"] {
+      background: var(--brand-primary);
+      color: #fff !important;
+    }
+
+    .hero {
+      margin-top: 1.5rem;
+      padding: 3.5rem 2rem;
+      border-radius: 1.25rem;
+      background: radial-gradient(circle at top left, var(--brand-accent), var(--brand-primary));
+      color: #fff;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin-bottom: 0.5rem;
+    }
+
+    .hero p.lead {
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(0,0,0,0.16);
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-primary {
+      background: #fff;
+      color: var(--brand-primary);
+      border-radius: 999px;
+      border: none;
+      font-weight: 600;
+    }
+
+    .btn-secondary {
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.7);
+      background: transparent;
+      color: #fff;
+    }
+
+    .hero-side-card {
+      background: rgba(255,255,255,0.06);
+      border-radius: 1rem;
+      padding: 1.2rem 1.2rem 1rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      font-size: 0.9rem;
+    }
+
+    .hero-side-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-side-card ul {
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-side-card small {
+      opacity: 0.8;
+    }
+
+    .section-heading {
+      margin-top: 3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .pill-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-primary);
+      opacity: 0.7;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .info-card {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1.4rem 1.5rem 1.2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .info-card h3 {
+      margin-bottom: 0.5rem;
+      color: var(--brand-primary);
+    }
+
+    .info-card ul {
+      margin-bottom: 0.4rem;
+    }
+
+    .info-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: var(--brand-soft);
+      color: var(--brand-primary);
+    }
+
+    #pip-updates article {
+      margin-bottom: 1rem;
+      border-radius: 0.8rem;
+      padding: 1rem 1.2rem;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    #pip-updates h3 {
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    #pip-updates small {
+      display: block;
+      margin-bottom: 0.4rem;
+      opacity: 0.7;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.15rem 0.6rem;
+      font-size: 0.76rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: #f9fafc;
+    }
+
+    /* FAQ details styling */
+    details summary {
+      font-weight: 600;
+      color: var(--brand-primary);
+    }
+
+    /* Subscribe section */
+    section.subscribe {
+      margin-top: 3rem;
+      margin-bottom: 2.5rem;
+    }
+
+    section.subscribe article {
+      border-radius: 1.25rem;
+      padding: 1.8rem 1.8rem 1.4rem;
+      background: #ffffff;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    section.subscribe h2 {
+      margin-bottom: 0.3rem;
+    }
+
+    footer.container {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      font-size: 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    footer a {
+      color: var(--brand-primary);
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 2.5rem 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top nav -->
+  <nav class="container-fluid">
+    <ul>
+      <li><strong>TPL – The PIP Lawyers</strong></li>
+    </ul>
+    <ul>
+      <li><a href="#about-pip">About PIP</a></li>
+      <li><a href="#process">How It Works</a></li>
+      <li><a href="#updates">Latest Updates</a></li>
+      <li><a href="#advocacy">Advocacy & Legal Help</a></li>
+      <li><a href="#contact" role="button">Free PIP Assessment</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div>
+        <div class="hero-badge">
+          <span>UK PIP Guidance</span>
+          <span>•</span>
+          <span>Independent & solicitor-backed</span>
+        </div>
+        <h1>PIP guidance you can actually understand.</h1>
+        <p class="lead">
+          TPL – The PIP Lawyers is a dedicated information and guidance service
+          for <strong>Personal Independence Payment (PIP)</strong> in the UK.
+          Clear information, practical tools, and access to advocacy and legal
+          support when you need it.
+        </p>
+        <div class="hero-cta">
+          <a class="btn-primary" href="#contact">Get help with your PIP claim</a>
+          <a class="btn-secondary" href="#about-pip">Learn how PIP works →</a>
+        </div>
+      </div>
+      <aside class="hero-side-card">
+        <h3>What we do</h3>
+        <ul>
+          <li>Explain PIP in plain English</li>
+          <li>Help you prepare your claim or review</li>
+          <li>Support you with mandatory reconsiderations & appeals</li>
+          <li>Connect you with solicitor-level legal advice where needed</li>
+        </ul>
+        <small>A subsidiary guidance brand of Crystal Law Solicitors.</small>
+      </aside>
+    </section>
+
+    <!-- ABOUT PIP -->
+    <section id="about-pip">
+      <p class="pill-label">Personal Independence Payment (PIP)</p>
+      <h2 class="section-heading">What is PIP?</h2>
+      <div class="grid">
+        <div>
+          <p>
+            Personal Independence Payment (PIP) is a UK benefit to help with
+            the extra costs of living with a long-term health condition or
+            disability. It is not means-tested and can be paid whether or not
+            you are in work.
+          </p>
+          <p>
+            PIP is made up of two parts:
+          </p>
+          <ul>
+            <li>Daily living component – help with everyday activities</li>
+            <li>Mobility component – help with getting around</li>
+          </ul>
+          <p>
+            Awards are based on how your condition affects you, not just your
+            diagnosis. TPL helps you understand and explain this clearly.
+          </p>
+        </div>
+        <div>
+          <article class="info-card">
+            <span class="info-tag">Key facts</span>
+            <ul>
+              <li>PIP is assessed by the Department for Work and Pensions (DWP).</li>
+              <li>It can be paid on top of other benefits and earnings.</li>
+              <li>You can challenge decisions through reconsiderations and appeals.</li>
+            </ul>
+            <p style="margin-top:0.5rem;">
+              <small>
+                For official GOV.UK guidance and current rates, always refer to
+                the latest government information. This website provides
+                supporting guidance and does not replace official advice.
+              </small>
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ELIGIBILITY & PROCESS -->
+    <section id="process">
+      <p class="pill-label">Steps & Criteria</p>
+      <h2 class="section-heading">Eligibility, claiming and appeals – step by step</h2>
+
+      <div class="card-grid">
+        <article class="info-card">
+          <h3>1. Check basic eligibility</h3>
+          <ul>
+            <li>Age requirements (usually 16+ and under State Pension age for new claims).</li>
+            <li>Condition or disability expected to last at least 12 months.</li>
+            <li>You have difficulties with daily living and/or mobility.</li>
+          </ul>
+          <p>
+            We help you map your difficulties to the PIP activities and
+            “descriptors” used in the assessment.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>2. Start a new PIP claim</h3>
+          <ul>
+            <li>Initial phone call to start the claim.</li>
+            <li>PIP2 “How your disability affects you” form.</li>
+            <li>Gathering medical and supporting evidence.</li>
+          </ul>
+          <p>
+            Use our checklists and guides to answer clearly and avoid common
+            mistakes.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>3. Assessments & decisions</h3>
+          <ul>
+            <li>Paper-based or telephone / face-to-face assessment.</li>
+            <li>DWP decision letter with your score and award.</li>
+          </ul>
+          <p>
+            If you disagree with the outcome, we explain your options and time
+            limits.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>4. Mandatory reconsiderations</h3>
+          <p>
+            If you think the decision is wrong, you usually must ask for a
+            <strong>mandatory reconsideration</strong> first.
+          </p>
+          <ul>
+            <li>Explain why you believe the decision is wrong.</li>
+            <li>Correct misunderstandings and add missing evidence.</li>
+          </ul>
+          <p>
+            TPL can draft reconsideration letters and help structure your reasons.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>5. Appeals to the Tribunal</h3>
+          <p>
+            If the reconsideration doesn’t resolve things, you can appeal to an
+            independent tribunal.
+          </p>
+          <ul>
+            <li>Appeal forms and deadlines.</li>
+            <li>Preparing a clear written statement.</li>
+            <li>What to expect at a hearing.</li>
+          </ul>
+          <p>
+            Advocacy and representative support may be available through TPL and
+            our legal partners.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>6. Ongoing awards & reviews</h3>
+          <p>
+            PIP awards are often time-limited and reviewed. We help you prepare
+            for:
+          </p>
+          <ul>
+            <li>Award reviews and “light touch” reviews.</li>
+            <li>Changes of circumstances.</li>
+            <li>What to do if your condition worsens or improves.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- REAL-TIME GOV.UK UPDATES (prototype) -->
+    <section id="updates">
+      <p class="pill-label">Live from GOV.UK (prototype)</p>
+      <h2 class="section-heading">Latest updates about PIP</h2>
+      <p>
+        This section is designed to pull recent PIP-related updates directly
+        from GOV.UK search (where technically possible). If your browser or
+        device blocks this connection, you will still see our curated guidance
+        below.
+      </p>
+
+      <div id="pip-updates">
+        <article>
+          <h3>Loading latest GOV.UK PIP content…</h3>
+          <small>Please wait a moment while we check for updates.</small>
+        </article>
+      </div>
+    </section>
+
+    <!-- ADVOCACY & LEGAL HELP -->
+    <section id="advocacy">
+      <p class="pill-label">Advocacy & legal support</p>
+      <h2 class="section-heading">Guidance first, legal support when you need it</h2>
+
+      <div class="grid">
+        <div>
+          <article class="info-card">
+            <h3>Free PIP information & guidance</h3>
+            <p>
+              TPL is first and foremost an information and guidance website. Our
+              role is to:
+            </p>
+            <ul>
+              <li>Explain the PIP rules and process in plain English.</li>
+              <li>Help you understand how the descriptors apply to you.</li>
+              <li>Provide templates, checklists and example wording.</li>
+            </ul>
+            <p>
+              You stay in control of your claim. We help you feel more confident
+              and prepared.
+            </p>
+          </article>
+        </div>
+
+        <div>
+          <article class="info-card">
+            <h3>Advocacy & representation</h3>
+            <p>
+              Some situations need more than written guidance. TPL can help
+              connect you with:
+            </p>
+            <ul>
+              <li>Experienced advisers who understand PIP tribunals.</li>
+              <li>Legal representatives and solicitors where appropriate.</li>
+              <li>Support at mandatory reconsideration and appeal stage.</li>
+            </ul>
+            <p>
+              <strong>Note:</strong> Availability of advocacy and legal support
+              can depend on your location, funding options and the nature of
+              your case.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <p class="pill-label">FAQs</p>
+      <h2 class="section-heading">Common questions about PIP</h2>
+
+      <details>
+        <summary>Do I need a solicitor to claim PIP?</summary>
+        <p>
+          No. Many people claim PIP without a solicitor. However, advice and
+          representation can be helpful if your case is complex, you have been
+          refused, or you are going through reconsideration or appeal.
+        </p>
+      </details>
+
+      <details>
+        <summary>Will using TPL affect my PIP decision?</summary>
+        <p>
+          No. DWP does not treat your claim differently because you have used a
+          guidance website. Our aim is to help you present your situation as
+          clearly and accurately as possible using the existing rules.
+        </p>
+      </details>
+
+      <details>
+        <summary>Is this the official government website?</summary>
+        <p>
+          No. TPL – The PIP Lawyers is not part of the government or DWP. We are a
+          guidance and support service, with access to solicitor-level advice
+          via Crystal Law Solicitors where needed. For official information
+          always refer to GOV.UK.
+        </p>
+      </details>
+    </section>
+
+    <!-- SUBSCRIPTION SECTION -->
+    <section class="subscribe" aria-label="Subscribe to PIP updates">
+      <div class="container">
+        <article>
+          <hgroup>
+            <h2>Stay updated on PIP changes</h2>
+            <h3>Receive plain-English email updates when PIP rules or guidance change.</h3>
+          </hgroup>
+          <form class="grid">
+            <input
+              type="text"
+              id="firstname"
+              name="firstname"
+              placeholder="First name"
+              aria-label="First name"
+              required
+            />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email address"
+              aria-label="Email address"
+              required
+            />
+            <button type="submit" onclick="event.preventDefault()">
+              Subscribe to PIP updates
+            </button>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <p class="pill-label">Contact</p>
+      <h2 class="section-heading">Request help with your PIP case</h2>
+      <div class="grid">
+        <div>
+          <p>
+            Use this form to request guidance or to ask about advocacy and legal
+            support for your PIP claim, review, reconsideration or appeal.
+          </p>
+          <p>
+            <strong>Emergency or urgent situations:</strong> if you are in
+            immediate financial or health crisis, contact relevant emergency
+            services or advice lines as appropriate.
+          </p>
+        </div>
+        <div>
+          <form class="grid">
+            <input type="text" name="name" placeholder="Full name" required />
+            <input type="email" name="email" placeholder="Email address" required />
+            <input type="text" name="location" placeholder="Town / City" />
+            <select name="stage" required>
+              <option value="">Which stage are you at?</option>
+              <option>Thinking about claiming PIP</option>
+              <option>New PIP claim in progress</option>
+              <option>Mandatory reconsideration</option>
+              <option>Appeal / Tribunal</option>
+              <option>PIP review / change of circumstances</option>
+            </select>
+            <textarea
+              name="message"
+              rows="4"
+              placeholder="Briefly describe your situation (do not include very sensitive details at this stage)."
+              required
+            ></textarea>
+            <button type="submit" onclick="event.preventDefault()">
+              Submit enquiry
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="container">
+    <small>
+      &copy; 2025 TPL – The PIP Lawyers. A subsidiary guidance brand of
+      Crystal Law Solicitors. All rights reserved.
+    </small>
+    <small>
+      <a href="#top">Back to top</a> •
+      <a href="#">Privacy</a> •
+      <a href="#">Cookies</a> •
+      <a href="#">Terms &amp; legal notice</a>
+    </small>
+  </footer>
+
+  <!-- Prototype JS to pull GOV.UK PIP items (may be blocked by CORS on some browsers) -->
+  <script>
+    (async function loadGovUkPipUpdates() {
+      const container = document.getElementById("pip-updates");
+      if (!container) return;
+
+      try {
+        const url =
+          "https://www.gov.uk/api/search.json?keywords=personal%20independence%20payment%20pip&count=5";
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Network response was not ok");
+        const data = await response.json();
+
+        if (!data || !data.results || data.results.length === 0) {
+          container.innerHTML =
+            "<article><h3>No live updates found.</h3><small>We couldn’t find recent PIP items from GOV.UK just now. Please check GOV.UK directly or try again later.</small></article>";
+          return;
+        }
+
+        container.innerHTML = "";
+        data.results.forEach((item) => {
+          const article = document.createElement("article");
+          const published = item.public_timestamp
+            ? new Date(item.public_timestamp).toLocaleDateString("en-GB")
+            : "Date not available";
+
+          article.innerHTML = `
+            <h3>${item.title}</h3>
+            <small>Source: GOV.UK &nbsp;&middot;&nbsp; ${published}</small>
+            <p>${item.description || ""}</p>
+            <p><a href="https://www.gov.uk${item.link}" target="_blank" rel="noopener">Read on GOV.UK →</a></p>
+          `;
+          container.appendChild(article);
+        });
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = `
+          <article>
+            <h3>Unable to load live GOV.UK feed</h3>
+            <p>We could not connect to GOV.UK from this device or browser. You can still visit the official pages directly:</p>
+            <ul>
+              <li><a href="https://www.gov.uk/pip" target="_blank" rel="noopener">Personal Independence Payment (PIP) – GOV.UK</a></li>
+              <li><a href="https://www.gov.uk/disability-benefits-helpline" target="_blank" rel="noopener">Disability benefits helpline – GOV.UK</a></li>
+            </ul>
+          </article>
+        `;
+      }
+    })();
+  </script>
+</body>
+</html>
