@@ -359,6 +359,18 @@
       border: 1px solid rgba(0, 0, 0, 0.03);
     }
 
+    /* CONTACT FORM STYLING (fix from screenshot) */
+    #contact form label {
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    #contact form input,
+    #contact form select,
+    #contact form textarea {
+      margin-top: 0.2rem;
+    }
+
     /* FOOTER */
 
     footer.container {
@@ -411,6 +423,7 @@
       <ul>
         <li><a href="#about-pip">About PIP</a></li>
         <li><a href="#process">How it works</a></li>
+        <li><a href="#calculator">PIP calculator</a></li>
         <li><a href="#updates">Gov.uk updates</a></li>
         <li><a href="#advocacy">Advocacy</a></li>
         <li><a href="#contact" role="button">Free PIP assessment</a></li>
@@ -632,6 +645,70 @@
       </div>
     </section>
 
+    <!-- SIMPLE PIP CALCULATOR -->
+    <section id="calculator">
+      <span class="pill-label">Tools</span>
+      <h2 class="section-heading">Simple PIP points checker (unofficial)</h2>
+      <div class="grid">
+        <div>
+          <p>
+            This tool gives a <strong>very rough indication</strong> of how your
+            needs might compare to the way PIP uses points. It is not exact and
+            does <strong>not replace</strong> a full assessment or official advice.
+          </p>
+          <p>
+            Scores here are simplified. The real system is more detailed, and only
+            DWP and tribunals can make decisions. Use this as a starting point for
+            discussion – not proof of entitlement.
+          </p>
+        </div>
+        <div>
+          <article class="info-card">
+            <h3>Estimate your PIP levels</h3>
+            <form id="pipCalculator">
+              <fieldset>
+                <legend>Daily living – overall level of help</legend>
+                <label>
+                  <input type="radio" name="daily" value="0" checked />
+                  I can do most daily tasks without help on most days.
+                </label>
+                <label>
+                  <input type="radio" name="daily" value="8" />
+                  I often need some help, prompting or aids (like reminders, special equipment).
+                </label>
+                <label>
+                  <input type="radio" name="daily" value="12" />
+                  I usually need a lot of help or supervision with several daily tasks.
+                </label>
+              </fieldset>
+
+              <fieldset>
+                <legend>Mobility – getting around</legend>
+                <label>
+                  <input type="radio" name="mobility" value="0" checked />
+                  I can plan and make journeys and move around without much difficulty.
+                </label>
+                <label>
+                  <input type="radio" name="mobility" value="8" />
+                  I have some difficulties planning journeys or walking reasonable distances.
+                </label>
+                <label>
+                  <input type="radio" name="mobility" value="12" />
+                  I have serious difficulties leaving the house or walking short distances.
+                </label>
+              </fieldset>
+
+              <button type="button" id="pipCalcButton">
+                Calculate rough PIP level
+              </button>
+            </form>
+
+            <div id="pipResult" style="margin-top:1rem; font-size:0.95rem;"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- LIVE GOV.UK UPDATES -->
     <section id="updates">
       <span class="pill-label">Live from GOV.UK</span>
@@ -784,24 +861,45 @@
           </p>
         </div>
         <div>
-          <form class="grid">
-            <input type="text" name="name" placeholder="Full name" required />
-            <input type="email" name="email" placeholder="Email address" required />
-            <input type="text" name="location" placeholder="Town / City" />
-            <select name="stage" required>
-              <option value="">Which stage are you at?</option>
-              <option>Thinking about claiming PIP</option>
-              <option>New PIP claim in progress</option>
-              <option>Mandatory reconsideration</option>
-              <option>Appeal / Tribunal</option>
-              <option>PIP review / change of circumstances</option>
-            </select>
-            <textarea
-              name="message"
-              rows="4"
-              placeholder="Briefly describe your situation (avoid very sensitive details at this stage)."
-              required
-            ></textarea>
+          <!-- FIXED CONTACT FORM: stacked full-width fields with labels -->
+          <form>
+            <label>
+              Full name
+              <input type="text" name="name" placeholder="Your full name" required />
+            </label>
+
+            <label>
+              Email address
+              <input type="email" name="email" placeholder="you@example.com" required />
+            </label>
+
+            <label>
+              Town / City
+              <input type="text" name="location" placeholder="For example: Leicester" />
+            </label>
+
+            <label>
+              Which stage are you at?
+              <select name="stage" required>
+                <option value="">Please choose…</option>
+                <option>Thinking about claiming PIP</option>
+                <option>New PIP claim in progress</option>
+                <option>Mandatory reconsideration</option>
+                <option>Appeal / Tribunal</option>
+                <option>PIP review / change of circumstances</option>
+              </select>
+            </label>
+
+            <label>
+              Briefly describe your situation
+              <textarea
+                name="message"
+                rows="4"
+                placeholder="Avoid very sensitive or identifying details at this stage."
+                required
+              ></textarea>
+            </label>
+
             <button type="submit" onclick="event.preventDefault()">
               Submit enquiry
             </button>
@@ -825,8 +923,9 @@
     </small>
   </footer>
 
-  <!-- GOV.UK PIP FEED (live; may be blocked by CORS on some devices) -->
+  <!-- GOV.UK PIP FEED (live; may be blocked by CORS on some devices) + CALCULATOR JS -->
   <script>
+    // GOV.UK updates
     (async function loadGovUkPipUpdates() {
       const container = document.getElementById("pip-updates");
       if (!container) return;
@@ -873,6 +972,35 @@
         `;
       }
     })();
+
+    // Simple PIP calculator
+    const calcButton = document.getElementById("pipCalcButton");
+    const resultBox = document.getElementById("pipResult");
+
+    if (calcButton && resultBox) {
+      calcButton.addEventListener("click", () => {
+        const daily = document.querySelector('input[name="daily"]:checked');
+        const mobility = document.querySelector('input[name="mobility"]:checked');
+
+        const dailyPoints = daily ? parseInt(daily.value, 10) : 0;
+        const mobilityPoints = mobility ? parseInt(mobility.value, 10) : 0;
+
+        function award(points) {
+          if (points >= 12) return "Enhanced rate likely";
+          if (points >= 8) return "Standard rate likely";
+          return "Below usual award threshold";
+        }
+
+        resultBox.innerHTML = `
+          <p><strong>Daily living:</strong> ${dailyPoints} points – ${award(dailyPoints)}</p>
+          <p><strong>Mobility:</strong> ${mobilityPoints} points – ${award(mobilityPoints)}</p>
+          <p style="font-size:0.85rem; color:#4b5563; margin-top:0.6rem;">
+            This is a simplified checker only. The real PIP system is more detailed and only DWP and tribunals can make decisions.
+            Use this result as a conversation starter, not proof of entitlement.
+          </p>
+        `;
+      });
+    }
   </script>
 </body>
 </html>
